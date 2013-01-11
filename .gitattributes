@@ -1,0 +1,5 @@
+#Setting up the end-of-line conversion upon checkin or checkout.
+* -text
+*.java text eol=lf
+*.xml text eol=lf
+*.properties text eol=lf
