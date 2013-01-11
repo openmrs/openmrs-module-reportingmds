@@ -13,58 +13,31 @@
  */
 package org.openmrs.module.reportingmds;
 
-
-import org.apache.commons.logging.Log; 
+import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.module.ModuleActivator;
+import org.openmrs.module.Activator;
 
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
  */
-public class ReportingMDSActivator implements ModuleActivator {
+public class ReportingMDSActivator implements Activator {
 	
 	protected Log log = LogFactory.getLog(getClass());
-		
+	
 	/**
-	 * @see ModuleActivator#willRefreshContext()
+	 * @see org.openmrs.module.Activator#shutdown()
 	 */
-	public void willRefreshContext() {
-		log.info("Refreshing Reporting MDS Module");
+	@Override
+	public void shutdown() {
+		log.info("Reporting MDS Module stopped");
 	}
 	
 	/**
-	 * @see ModuleActivator#contextRefreshed()
+	 * @see org.openmrs.module.Activator#startup()
 	 */
-	public void contextRefreshed() {
-		log.info("Reporting MDS Module refreshed");
-	}
-	
-	/**
-	 * @see ModuleActivator#willStart()
-	 */
-	public void willStart() {
-		log.info("Starting Reporting MDS Module");
-	}
-	
-	/**
-	 * @see ModuleActivator#started()
-	 */
-	public void started() {
+	@Override
+	public void startup() {
 		log.info("Reporting MDS Module started");
 	}
 	
-	/**
-	 * @see ModuleActivator#willStop()
-	 */
-	public void willStop() {
-		log.info("Stopping Reporting MDS Module");
-	}
-	
-	/**
-	 * @see ModuleActivator#stopped()
-	 */
-	public void stopped() {
-		log.info("Reporting MDS Module stopped");
-	}
-		
 }
