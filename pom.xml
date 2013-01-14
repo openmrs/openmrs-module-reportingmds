@@ -48,7 +48,7 @@
 	</modules>
 
 	<properties>
-		<openMRSVersion>1.6.5</openMRSVersion>
+		<openMRSVersion>1.9.2</openMRSVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -97,9 +97,24 @@
 			<!-- End OpenMRS core -->
 
 			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>1.4</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>reporting-api</artifactId>
 				<version>0.7.4.1</version>
+				<type>jar</type>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>serialization.xstream-api</artifactId>
+				<version>0.2.7</version>
 				<type>jar</type>
 				<scope>provided</scope>
 			</dependency>
@@ -110,6 +125,14 @@
 				<version>1.1.2</version>
 				<type>jar</type>
 				<scope>provided</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>metadatasharing-api-test</artifactId>
+				<version>1.1.2</version>
+				<type>jar</type>
+				<scope>test</scope>
 			</dependency>
 
 		</dependencies>
@@ -130,13 +153,26 @@
 			<artifactId>openmrs-test</artifactId>
 			<type>pom</type>
 		</dependency>
+		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>reporting-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
+			<artifactId>serialization.xstream-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
 			<artifactId>metadatasharing-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>metadatasharing-api-test</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -159,7 +195,7 @@
 				</includes>
 			</resource>
 		</resources>
-		
+
 		<testResources>
 			<testResource>
 				<directory>src/test/resources</directory>
@@ -178,7 +214,7 @@
 				</includes>
 			</testResource>
 		</testResources>
-		
+
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -189,7 +225,7 @@
 						<source>1.6</source>
 					</configuration>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.openmrs.maven.plugins</groupId>
 					<artifactId>maven-openmrs-plugin</artifactId>
@@ -212,7 +248,7 @@
 						</execution>
 					</executions>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
