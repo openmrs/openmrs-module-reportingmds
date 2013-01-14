@@ -13,6 +13,9 @@
  */
 package org.openmrs.module.reportingmds;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.openmrs.api.context.Context;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.cohort.definition.service.CohortDefinitionService;
@@ -31,5 +34,15 @@ public class CohortDefinitionHandler extends DefinitionHandler<CohortDefinition>
 	@Override
 	public DefinitionService<CohortDefinition> getService() {
 		return Context.getService(CohortDefinitionService.class);
+	}
+	
+	/**
+	 * @see org.openmrs.module.metadatasharing.handler.MetadataTypesHandler#getTypes()
+	 */
+	@Override
+	public Map<Class<? extends CohortDefinition>, String> getTypes() {
+		Map<Class<? extends CohortDefinition>,String> map = new HashMap<Class<? extends CohortDefinition>, String>();
+		map.put(CohortDefinition.class, "Cohort Definition");
+	    return map;
 	}
 }

@@ -14,15 +14,12 @@
 package org.openmrs.module.reportingmds;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.metadatasharing.handler.MetadataSaveHandler;
 import org.openmrs.module.metadatasharing.handler.MetadataSearchHandler;
 import org.openmrs.module.metadatasharing.handler.MetadataTypesHandler;
-import org.openmrs.module.reporting.common.MessageUtil;
 import org.openmrs.module.reporting.common.ObjectUtil;
 import org.openmrs.module.reporting.definition.service.DefinitionService;
 import org.openmrs.module.reporting.evaluation.Definition;
@@ -36,17 +33,6 @@ public abstract class DefinitionHandler<T extends Definition> implements Metadat
 	 * @return the DefinitionService which handles the given Definition
 	 */
 	public abstract DefinitionService<T> getService();
-	
-	/**
-	 * @see MetadataTypesHandler#getTypes()
-	 */
-	public Map<Class<? extends T>, String> getTypes() {
-		Map<Class<? extends T>, String> ret = new HashMap<Class<? extends T>, String>();
-		for (Class<? extends T> type : getService().getDefinitionTypes()) {
-			ret.put(type, MessageUtil.getDisplayLabel(type)); // Tried putting MessageUtil.getDisplayLabel(type) here, but seems to need simplename
-		}
-		return ret;
-	}
 	
 	/**
 	 * @see MetadataSaveHandler#saveItem(Object)
