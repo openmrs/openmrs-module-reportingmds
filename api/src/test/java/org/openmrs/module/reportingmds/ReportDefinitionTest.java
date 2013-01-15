@@ -14,8 +14,11 @@
 package org.openmrs.module.reportingmds;
 
 import org.junit.Test;
+import org.openmrs.Concept;
 import org.openmrs.module.metadatasharing.ImportConfig;
 import org.openmrs.module.metadatasharing.ImportMode;
+import org.openmrs.module.metadatasharing.ImportType;
+import org.openmrs.module.metadatasharing.ImportedItem;
 import org.openmrs.module.metadatasharing.MetadataSharing;
 import org.openmrs.module.metadatasharing.wrapper.PackageImporter;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
@@ -25,9 +28,17 @@ public class ReportDefinitionTest extends BaseModuleContextSensitiveTest {
 	@Test
 	public void shouldImportBasicReportDefinitionWithConcept() throws Exception {
 		PackageImporter importer = MetadataSharing.getInstance().newPackageImporter();
-		importer.loadSerializedPackageStream(getClass().getResourceAsStream("/report_definitions-1.zip"));
-		
+		importer.loadSerializedPackageStream(getClass().getResourceAsStream("/report_definitions-2.zip"));
 		importer.setImportConfig(ImportConfig.valueOf(ImportMode.PARENT_AND_CHILD));
+		
+		for (ImportedItem importedItem : importer.getImportedItems(0)) {
+	        if (importedItem.getIncoming() instanceof Concept) {
+	        	importedItem.setExistingUuid("c607c80f-1ea9-4da3-bb88-6276ce8868dd");
+	        	importedItem.setImportType(ImportType.OVERWRITE_MINE);
+	        	importedItem.setAssessed(true);
+	        }
+        }
+		
 		importer.importPackage();
 	}
 }

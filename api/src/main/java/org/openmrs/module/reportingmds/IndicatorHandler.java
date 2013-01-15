@@ -23,7 +23,7 @@ import org.openmrs.module.reporting.indicator.service.IndicatorService;
 import org.springframework.stereotype.Component;
 
 @Component("reportingmds.IndicatorHandler")
-public class IndicatorHandler extends DefinitionHandler<Indicator> {
+public class IndicatorHandler extends DefinitionBaseHandler<Indicator> {
 
 	/**
      * @see org.openmrs.module.metadatasharing.handler.MetadataTypesHandler#getTypes()
@@ -36,7 +36,7 @@ public class IndicatorHandler extends DefinitionHandler<Indicator> {
     }
 
 	/**
-     * @see org.openmrs.module.reportingmds.DefinitionHandler#getService()
+     * @see org.openmrs.module.reportingmds.DefinitionBaseHandler#getService()
      */
     @Override
     public DefinitionService<Indicator> getService() {

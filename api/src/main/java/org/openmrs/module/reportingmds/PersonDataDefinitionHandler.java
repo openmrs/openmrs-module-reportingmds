@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component("reportingmds.PersonDataDefinitionHandler")
-public class PersonDataDefinitionHandler extends DefinitionHandler<PersonDataDefinition> {
+public class PersonDataDefinitionHandler extends DefinitionBaseHandler<PersonDataDefinition> {
 	
 	/**
 	 * @see org.openmrs.module.metadatasharing.handler.MetadataTypesHandler#getTypes()
@@ -37,7 +37,7 @@ public class PersonDataDefinitionHandler extends DefinitionHandler<PersonDataDef
 	}
 	
 	/**
-	 * @see org.openmrs.module.reportingmds.DefinitionHandler#getService()
+	 * @see org.openmrs.module.reportingmds.DefinitionBaseHandler#getService()
 	 */
 	@Override
 	public DefinitionService<PersonDataDefinition> getService() {

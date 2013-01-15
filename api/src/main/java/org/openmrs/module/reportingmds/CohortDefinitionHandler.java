@@ -26,10 +26,10 @@ import org.springframework.stereotype.Component;
  * Provides necessary functionality to share Cohort Definitions
  */
 @Component("reportingmds.CohortDefinitionHandler")
-public class CohortDefinitionHandler extends DefinitionHandler<CohortDefinition> {
+public class CohortDefinitionHandler extends DefinitionBaseHandler<CohortDefinition> {
 
 	/**
-	 * @see DefinitionHandler#getService()
+	 * @see DefinitionBaseHandler#getService()
 	 */
 	@Override
 	public DefinitionService<CohortDefinition> getService() {

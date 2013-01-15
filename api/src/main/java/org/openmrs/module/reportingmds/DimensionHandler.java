@@ -23,7 +23,7 @@ import org.openmrs.module.reporting.indicator.dimension.service.DimensionService
 import org.springframework.stereotype.Component;
 
 @Component("reportingmds.DimensionHandler")
-public class DimensionHandler extends DefinitionHandler<Dimension> {
+public class DimensionHandler extends DefinitionBaseHandler<Dimension> {
 
 	/**
      * @see org.openmrs.module.metadatasharing.handler.MetadataTypesHandler#getTypes()
@@ -36,7 +36,7 @@ public class DimensionHandler extends DefinitionHandler<Dimension> {
     }
 
 	/**
-     * @see org.openmrs.module.reportingmds.DefinitionHandler#getService()
+     * @see org.openmrs.module.reportingmds.DefinitionBaseHandler#getService()
      */
     @Override
     public DefinitionService<Dimension> getService() {

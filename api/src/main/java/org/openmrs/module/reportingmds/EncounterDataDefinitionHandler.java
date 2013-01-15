@@ -23,7 +23,7 @@ import org.openmrs.module.reporting.definition.service.DefinitionService;
 import org.springframework.stereotype.Component;
 
 @Component("reportingmds.EncounterDataDefinitionHandler")
-public class EncounterDataDefinitionHandler extends DefinitionHandler<EncounterDataDefinition> {
+public class EncounterDataDefinitionHandler extends DefinitionBaseHandler<EncounterDataDefinition> {
 	
 	/**
 	 * @see org.openmrs.module.metadatasharing.handler.MetadataTypesHandler#getTypes()
@@ -36,7 +36,7 @@ public class EncounterDataDefinitionHandler extends DefinitionHandler<EncounterD
 	}
 	
 	/**
-	 * @see org.openmrs.module.reportingmds.DefinitionHandler#getService()
+	 * @see org.openmrs.module.reportingmds.DefinitionBaseHandler#getService()
 	 */
 	@Override
 	public DefinitionService<EncounterDataDefinition> getService() {

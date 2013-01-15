@@ -23,7 +23,7 @@ import org.openmrs.module.reporting.definition.service.DefinitionService;
 import org.springframework.stereotype.Component;
 
 @Component("reportingmds.DataSetDefinitionHandler")
-public class DataSetDefinitionHandler extends DefinitionHandler<DataSetDefinition> {
+public class DataSetDefinitionHandler extends DefinitionBaseHandler<DataSetDefinition> {
 	
 	/**
 	 * @see org.openmrs.module.metadatasharing.handler.MetadataTypesHandler#getTypes()
@@ -36,7 +36,7 @@ public class DataSetDefinitionHandler extends DefinitionHandler<DataSetDefinitio
 	}
 	
 	/**
-	 * @see org.openmrs.module.reportingmds.DefinitionHandler#getService()
+	 * @see org.openmrs.module.reportingmds.DefinitionBaseHandler#getService()
 	 */
 	@Override
 	public DefinitionService<DataSetDefinition> getService() {

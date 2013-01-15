@@ -14,7 +14,9 @@
 package org.openmrs.module.reportingmds;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.metadatasharing.handler.MetadataSaveHandler;
@@ -27,12 +29,23 @@ import org.openmrs.module.reporting.evaluation.Definition;
 /**
  * Provides necessary functionality to share reporting module definition classes
  */
-public abstract class DefinitionHandler<T extends Definition> implements MetadataTypesHandler<T>, MetadataSearchHandler<T>, MetadataSaveHandler<T> {
+public abstract class DefinitionBaseHandler<T extends Definition> implements MetadataTypesHandler<T>, MetadataSearchHandler<T>, MetadataSaveHandler<T> {
 	
 	/**
 	 * @return the DefinitionService which handles the given Definition
 	 */
 	public abstract DefinitionService<T> getService();
+	
+	/**
+	 * @see org.openmrs.module.metadatasharing.handler.MetadataTypesHandler#getTypes()
+	 */
+	@SuppressWarnings("unchecked")
+    @Override
+	public Map<Class<? extends T>, String> getTypes() {
+		Map<Class<? extends T>, String> types = new HashMap<Class<? extends T>, String>();
+		types.put((Class<? extends T>) Definition.class, null);
+	    return types;
+	}
 	
 	/**
 	 * @see MetadataSaveHandler#saveItem(Object)

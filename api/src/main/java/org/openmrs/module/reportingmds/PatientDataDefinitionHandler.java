@@ -23,7 +23,7 @@ import org.openmrs.module.reporting.definition.service.DefinitionService;
 import org.springframework.stereotype.Component;
 
 @Component("reportingmds.PatientDataDefinitionHandler")
-public class PatientDataDefinitionHandler extends DefinitionHandler<PatientDataDefinition> {
+public class PatientDataDefinitionHandler extends DefinitionBaseHandler<PatientDataDefinition> {
 	
 	/**
 	 * @see org.openmrs.module.metadatasharing.handler.MetadataTypesHandler#getTypes()
@@ -36,7 +36,7 @@ public class PatientDataDefinitionHandler extends DefinitionHandler<PatientDataD
 	}
 	
 	/**
-	 * @see org.openmrs.module.reportingmds.DefinitionHandler#getService()
+	 * @see org.openmrs.module.reportingmds.DefinitionBaseHandler#getService()
 	 */
 	@Override
 	public DefinitionService<PatientDataDefinition> getService() {
