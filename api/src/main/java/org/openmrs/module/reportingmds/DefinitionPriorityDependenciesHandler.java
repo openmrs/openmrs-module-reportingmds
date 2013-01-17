@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.openmrs.OpenmrsObject;
 import org.openmrs.module.metadatasharing.MetadataSharing;
 import org.openmrs.module.metadatasharing.handler.MetadataPriorityDependenciesHandler;
 import org.openmrs.module.metadatasharing.visitor.ObjectVisitor;
@@ -57,6 +58,8 @@ public class DefinitionPriorityDependenciesHandler implements MetadataPriorityDe
 						if (object instanceof Mapped) {
 							Mapped<?> mapped = (Mapped<?>) object;
 							dependencies.add(mapped.getParameterizable());
+						} else if (value instanceof OpenmrsObject) {
+							dependencies.add(value);
 						}
 					}
 				} else if (value instanceof Map) {
@@ -64,8 +67,12 @@ public class DefinitionPriorityDependenciesHandler implements MetadataPriorityDe
 						if (object instanceof Mapped) {
 							Mapped<?> mapped = (Mapped<?>) object;
 							dependencies.add(mapped.getParameterizable());
+						} else if (value instanceof OpenmrsObject) {
+							dependencies.add(value);
 						}
 					}
+				} else if (value instanceof OpenmrsObject) {
+					dependencies.add(value);
 				}
 			}
 			

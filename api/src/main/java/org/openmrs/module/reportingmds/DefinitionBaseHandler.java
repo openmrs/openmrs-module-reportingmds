@@ -14,9 +14,7 @@
 package org.openmrs.module.reportingmds;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.openmrs.api.db.DAOException;
 import org.openmrs.module.metadatasharing.handler.MetadataSaveHandler;
@@ -37,17 +35,6 @@ public abstract class DefinitionBaseHandler<T extends Definition> implements Met
 	public abstract DefinitionService<T> getService();
 	
 	/**
-	 * @see org.openmrs.module.metadatasharing.handler.MetadataTypesHandler#getTypes()
-	 */
-	@SuppressWarnings("unchecked")
-    @Override
-	public Map<Class<? extends T>, String> getTypes() {
-		Map<Class<? extends T>, String> types = new HashMap<Class<? extends T>, String>();
-		types.put((Class<? extends T>) Definition.class, null);
-	    return types;
-	}
-	
-	/**
 	 * @see MetadataSaveHandler#saveItem(Object)
 	 */
 	public T saveItem(T definition) throws DAOException {
@@ -59,7 +46,12 @@ public abstract class DefinitionBaseHandler<T extends Definition> implements Met
 	 */
 	@Override
 	public T getItemByUuid(Class<? extends T> type, String uuid) throws DAOException {
-		return getService().getDefinition(uuid, type);
+		T definition = getService().getDefinition(uuid, type); //returns a new definition if none can be found
+		if (definition != null && definition.getId() != null) {
+			return definition; 
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -67,7 +59,12 @@ public abstract class DefinitionBaseHandler<T extends Definition> implements Met
 	 */
 	@Override
 	public T getItemById(Class<? extends T> type, Integer id) throws DAOException {
-		return getService().getDefinition(type, id);
+		T definition = getService().getDefinition(type, id); //returns a new definition if none can be found
+		if (definition != null && definition.getId() != null) {
+			return definition; 
+		} else {
+			return null;
+		}
 	}
 	
 	/**

@@ -15,6 +15,8 @@ package org.openmrs.module.reportingmds;
 
 import org.junit.Test;
 import org.openmrs.Concept;
+import org.openmrs.api.ConceptService;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.metadatasharing.ImportConfig;
 import org.openmrs.module.metadatasharing.ImportMode;
 import org.openmrs.module.metadatasharing.ImportType;
@@ -22,8 +24,13 @@ import org.openmrs.module.metadatasharing.ImportedItem;
 import org.openmrs.module.metadatasharing.MetadataSharing;
 import org.openmrs.module.metadatasharing.wrapper.PackageImporter;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
+import org.openmrs.test.SkipBaseSetup;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ReportDefinitionTest extends BaseModuleContextSensitiveTest {
+	
+	@Autowired
+	ConceptService conceptService;
 	
 	@Test
 	public void shouldImportBasicReportDefinitionWithConcept() throws Exception {
@@ -38,6 +45,30 @@ public class ReportDefinitionTest extends BaseModuleContextSensitiveTest {
 	        	importedItem.setAssessed(true);
 	        }
         }
+		
+		importer.importPackage();
+	}
+	
+	@Test
+	public void shouldImportBasicReportDefinitionWithConceptTwice() throws Exception {
+		shouldImportBasicReportDefinitionWithConcept();
+		
+		Context.flushSession();
+		Context.clearSession();
+		
+		shouldImportBasicReportDefinitionWithConcept();
+	}
+	
+	@Test
+	@SkipBaseSetup
+	public void shouldImportBasicReportDefinitionWithConceptToEmptyDB() throws Exception {
+		initializeInMemoryDatabase();
+		authenticate();
+		executeDataSet("requiredTestDataset.xml");
+		
+		PackageImporter importer = MetadataSharing.getInstance().newPackageImporter();
+		importer.loadSerializedPackageStream(getClass().getResourceAsStream("/report_definitions-2.zip"));
+		importer.setImportConfig(ImportConfig.valueOf(ImportMode.PARENT_AND_CHILD));
 		
 		importer.importPackage();
 	}
