@@ -53,13 +53,15 @@ public class DefinitionPriorityDependenciesHandler implements MetadataPriorityDe
 				if (value instanceof Mapped) {
 					Mapped<?> mapped = (Mapped<?>) value;
 					dependencies.add(mapped.getParameterizable());
+				} else if (value instanceof OpenmrsObject) {
+					dependencies.add(value);
 				} else if (value instanceof Collection) {
 					for (Object object : (Collection<?>) value) {
 						if (object instanceof Mapped) {
 							Mapped<?> mapped = (Mapped<?>) object;
 							dependencies.add(mapped.getParameterizable());
-						} else if (value instanceof OpenmrsObject) {
-							dependencies.add(value);
+						} else if (object instanceof OpenmrsObject) {
+							dependencies.add(object);
 						}
 					}
 				} else if (value instanceof Map) {
@@ -67,12 +69,10 @@ public class DefinitionPriorityDependenciesHandler implements MetadataPriorityDe
 						if (object instanceof Mapped) {
 							Mapped<?> mapped = (Mapped<?>) object;
 							dependencies.add(mapped.getParameterizable());
-						} else if (value instanceof OpenmrsObject) {
-							dependencies.add(value);
+						} else if (object instanceof OpenmrsObject) {
+							dependencies.add(object);
 						}
 					}
-				} else if (value instanceof OpenmrsObject) {
-					dependencies.add(value);
 				}
 			}
 			
