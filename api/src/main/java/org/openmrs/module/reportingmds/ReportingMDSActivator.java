@@ -13,31 +13,10 @@
  */
 package org.openmrs.module.reportingmds;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.openmrs.module.Activator;
+import org.openmrs.module.BaseModuleActivator;
 
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
  */
-public class ReportingMDSActivator implements Activator {
-	
-	protected Log log = LogFactory.getLog(getClass());
-	
-	/**
-	 * @see org.openmrs.module.Activator#shutdown()
-	 */
-	@Override
-	public void shutdown() {
-		log.info("Reporting MDS Module stopped");
-	}
-	
-	/**
-	 * @see org.openmrs.module.Activator#startup()
-	 */
-	@Override
-	public void startup() {
-		log.info("Reporting MDS Module started");
-	}
-	
+public class ReportingMDSActivator extends BaseModuleActivator {
 }

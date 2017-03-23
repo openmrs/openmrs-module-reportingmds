@@ -27,9 +27,11 @@ import org.openmrs.module.metadatasharing.handler.MetadataMergeHandler;
 import org.openmrs.module.metadatasharing.handler.MetadataPriorityDependenciesHandler;
 import org.openmrs.module.metadatasharing.handler.impl.ObjectHandler;
 import org.openmrs.module.metadatasharing.visitor.ObjectVisitor;
+import org.openmrs.module.reporting.dataset.definition.CohortIndicatorAndDimensionDataSetDefinition;
 import org.openmrs.module.reporting.evaluation.Definition;
 import org.openmrs.module.reporting.evaluation.parameter.Mapped;
 import org.openmrs.module.reporting.evaluation.parameter.Parameterizable;
+import org.openmrs.module.reporting.indicator.CohortIndicator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -63,32 +65,40 @@ public class DefinitionCustomHandler implements MetadataPriorityDependenciesHand
 			
 			@Override
 			public void visit(String name, Class<?> type, Class<?> definedIn, Object value) {
-				if (value instanceof Mapped) {
-					Mapped<?> mapped = (Mapped<?>) value;
-					dependencies.add(mapped.getParameterizable());
-				} else if (value instanceof OpenmrsObject) {
-					dependencies.add(value);
+				if (pullDependencies(value)) {
+					//done!
 				} else if (value instanceof Collection) {
 					for (Object object : (Collection<?>) value) {
-						if (object instanceof Mapped) {
-							Mapped<?> mapped = (Mapped<?>) object;
-							dependencies.add(mapped.getParameterizable());
-						} else if (object instanceof OpenmrsObject) {
-							dependencies.add(object);
-						}
+						pullDependencies(object);
 					}
 				} else if (value instanceof Map) {
 					for (Object object : ((Map<?, ?>) value).values()) {
-						if (object instanceof Mapped) {
-							Mapped<?> mapped = (Mapped<?>) object;
-							dependencies.add(mapped.getParameterizable());
-						} else if (object instanceof OpenmrsObject) {
-							dependencies.add(object);
-						}
+						pullDependencies(object);
 					}
 				}
 			}
-			
+
+			private boolean pullDependencies(Object object) {
+				if (object instanceof Mapped) {
+					Mapped<?> mapped = (Mapped<?>) object;
+					dependencies.add(mapped.getParameterizable());
+					return true;
+				}
+
+				if (object instanceof CohortIndicatorAndDimensionDataSetDefinition.CohortIndicatorAndDimensionSpecification) {
+					CohortIndicatorAndDimensionDataSetDefinition.CohortIndicatorAndDimensionSpecification specification = (CohortIndicatorAndDimensionDataSetDefinition.CohortIndicatorAndDimensionSpecification) object;
+					dependencies.add(specification.getIndicator().getParameterizable());
+					return true;
+				}
+
+				if (object instanceof OpenmrsObject) {
+					dependencies.add(object);
+					return true;
+				}
+
+				return false;
+			}
+
 		});
 		
 		return dependencies;
@@ -109,8 +119,8 @@ public class DefinitionCustomHandler implements MetadataPriorityDependenciesHand
 				
 				@Override
 				public void visit(String fieldName, Class<?> type, Class<?> definedIn, Object incomingField) {
-					if (incomingField instanceof Mapped) {
-						setExistingOnMappedField(incomingField, incomingToExisting);
+					if (setExistingOnMappedField(incomingField, incomingToExisting)) {
+						//done!
 					} else if (incomingField instanceof Collection) {
 						@SuppressWarnings("unchecked")
 						Collection<Object> collection = (Collection<Object>) incomingField;
@@ -168,8 +178,8 @@ public class DefinitionCustomHandler implements MetadataPriorityDependenciesHand
 			}
 		}
 	}
-	
-	private void setExistingOnMappedField(Object incomingField, final Map<Object, Object> incomingToExisting) {
+
+	private boolean setExistingOnMappedField(Object incomingField, final Map<Object, Object> incomingToExisting) {
 		if (incomingField instanceof Mapped) {
 			@SuppressWarnings("unchecked")
 			Mapped<Parameterizable> mappedField = (Mapped<Parameterizable>) incomingField;
@@ -177,7 +187,18 @@ public class DefinitionCustomHandler implements MetadataPriorityDependenciesHand
 			if (existing != null) {
 				mappedField.setParameterizable((Parameterizable) existing);
 			}
+			return true;
 		}
+		if (incomingField instanceof CohortIndicatorAndDimensionDataSetDefinition.CohortIndicatorAndDimensionSpecification) {
+			CohortIndicatorAndDimensionDataSetDefinition.CohortIndicatorAndDimensionSpecification specField = (CohortIndicatorAndDimensionDataSetDefinition.CohortIndicatorAndDimensionSpecification) incomingField;
+			Object existing = incomingToExisting.get(specField.getIndicator().getParameterizable());
+			if (existing != null) {
+				specField.getIndicator().setParameterizable((CohortIndicator) existing);
+			}
+			return true;
+		}
+
+		return false;
 	}
 	
 }
